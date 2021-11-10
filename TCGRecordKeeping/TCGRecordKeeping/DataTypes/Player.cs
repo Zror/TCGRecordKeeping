@@ -10,7 +10,7 @@ namespace TCGRecordKeeping.DataTypes
     {
         public string PlayerName { get; set; }
         public int PlayerID { get; set; }
-        public double ELOScore { get; set; }
+        public double ELORating { get; set; }
     }
     public class PlayerGroup
     {

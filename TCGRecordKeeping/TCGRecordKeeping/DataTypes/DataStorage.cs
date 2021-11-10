@@ -11,6 +11,7 @@ namespace TCGRecordKeeping.DataTypes
         public List<Player> Players { get ;set; }
         public List<PlayerGroup> PlayerGroups { get; set; }
         public List <CardGame> CardGames { get; set; }
-        public List<GameRecord> gameRecords { get; set; }
+        public List<GameRecord> GameRecords { get; set; }
+        public List<Tournament> Tournaments { get; set; }
     }
 }

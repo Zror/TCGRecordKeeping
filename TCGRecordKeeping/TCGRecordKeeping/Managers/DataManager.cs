@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,7 +25,14 @@ namespace TCGRecordKeeping.Managers
             }
             else
             {
-                dataStorage = new DataStorage();
+                dataStorage = new DataStorage()
+                {
+                    CardGames = new List<CardGame>(),
+                    GameRecords = new List<GameRecord>(),
+                    PlayerGroups = new List<PlayerGroup>(),
+                    Players = new List<Player>(),
+                    Tournaments = new List<Tournament>()
+                };
             }
         }
         public bool Save()
@@ -53,11 +61,17 @@ namespace TCGRecordKeeping.Managers
             {
                 PlayerName=playerName,
                 PlayerID = playerid,
-                ELOScore = 1500
+                ELORating = 1500
             };
             dataStorage.Players.Add(player);
             return player;
         }
+
+        public Tournament GetTournament(int tournamentId)
+        {
+            return dataStorage.Tournaments.Find(t => t.Id == tournamentId);
+        }
+
         public PlayerGroup AddPlayergroup(List<int> PlayerIds)
         {
             int playerGroupId = dataStorage.PlayerGroups.Count();
@@ -73,7 +87,7 @@ namespace TCGRecordKeeping.Managers
             dataStorage.PlayerGroups.Add(group);
             return group;
         }
-        public PlayerGroup findOrCreatePlayerGroup(List<int> PlayerIds)
+        public PlayerGroup FindOrCreatePlayerGroup(List<int> PlayerIds)
         {
             PlayerGroup group;
 
@@ -86,6 +100,81 @@ namespace TCGRecordKeeping.Managers
 
             return group;
         }
-        public Team GetTeam (List<player>)
+        public Team GetTeam(List<PlayerHandicap>playerHandicaps)
+        {
+            List<int> playerIDs = playerHandicaps.Select(h => h.PlayerID).ToList();
+            return new Team
+            {
+                playerHandicaps = playerHandicaps,
+                PlayerGroupID = FindOrCreatePlayerGroup(playerIDs).PlayerGroupId
+            };
+        }
+        public GameRecord AddGameRecord(List<PlayerHandicap> Team1Handicaps, List<PlayerHandicap> Team2Handicaps, int CardGameID, int TournamentID,  int Team1RemaingLife, int Team2RemaingLife, int TurnCount, Winner Winner, bool WinnerUsedAlternateWinCondition)
+        {
+            int recordId = dataStorage.GameRecords.Count;
+            while (dataStorage.GameRecords.Any(r => r.GameRecordId == recordId))
+            {
+                recordId++;
+            }
+            GameRecord record = new GameRecord
+            {
+                CardGameId=CardGameID,
+                GameRecordId=recordId,
+                TournamentId = TournamentID,
+                Team1=GetTeam(Team1Handicaps),
+                Team2=GetTeam(Team2Handicaps),
+                Team1RemaingLife=Team1RemaingLife,
+                Team2RemaingLife=Team2RemaingLife,
+                TurnCount=TurnCount,
+                Winner=Winner,
+                WinnerUsedAlternateWinCondition=WinnerUsedAlternateWinCondition
+            };
+            dataStorage.GameRecords.Add(record);
+            return record;
+        }
+        public CardGame AddCardGame(string CardGameName, int MaxLifeValue, List<KFactorRule> KFactorRules, KFactorModification KFactorModification, List<TurnAdjustmentRule> turnAdjustmentRules)
+        {
+            int cardGameId = dataStorage.CardGames.Count;
+            while (dataStorage.CardGames.Any(C => C.Id == cardGameId))
+            {
+                cardGameId++;
+            }
+            CardGame cardGame = new CardGame
+            {
+                Id = cardGameId,
+                CardGameName = CardGameName,
+                KFactorModification = KFactorModification,
+                KFactorRules = KFactorRules,
+                TurnAdjustmentRules=turnAdjustmentRules
+            };
+            dataStorage.CardGames.Add(cardGame);
+            return cardGame;
+        }
+        public Tournament AddTournament(string TournamentName, int MaxLifeValue)
+        {
+            int tournamentId = dataStorage.Tournaments.Count;
+            while (dataStorage.Tournaments.Any(T => T.Id == tournamentId))
+            {
+                tournamentId++;
+            }
+            Tournament tournament = new Tournament
+            {
+                Id = tournamentId,
+                MaxLifeValue = MaxLifeValue,
+                TournamentName = TournamentName
+            };
+            dataStorage.Tournaments.Add(tournament);
+            return tournament;
+        }
+
+        public List<Player> TranslateTeamToPlayerlist(Team team)
+        {
+            PlayerGroup group = dataStorage.PlayerGroups.Find(G => G.PlayerGroupId == team.PlayerGroupID);
+            return dataStorage.Players.Where(p => group.PlayerIds.Contains(p.PlayerID)).ToList();
+        }
+        public CardGame GetCardGame(int id)
+        {
+            return dataStorage.CardGames.Find(c => c.Id == id);
+        }
     }
 }
