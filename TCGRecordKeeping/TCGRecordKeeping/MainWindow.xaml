@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <TextBox x:Name="DatabaseFileBox" Height="21" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="559"/>
+        <Button x:Name="Save" Content="Save" Margin="637,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Height="21" Click="Save_Click"/>
+        <Button x:Name="Load" Content="Load" HorizontalAlignment="Left" Margin="677,10,0,0" VerticalAlignment="Top" Click="Load_Click" Width="34" Height="21" RenderTransformOrigin="-0.294,0.573"/>
+        <Button x:Name="SelectFileButton" Content="Select File" HorizontalAlignment="Left" Height="20" Margin="574,11,0,0" VerticalAlignment="Top" Width="63" Click="SelectFileButton_Click"/>
     </Grid>
 </Window>
