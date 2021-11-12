@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TCGRecordKeeping.DataTypes
 {
-    class DataStorage
+    public class DataStorage
     {
         public List<Player> Players { get ;set; }
         public List<PlayerGroup> PlayerGroups { get; set; }

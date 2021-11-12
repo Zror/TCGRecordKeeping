@@ -1,0 +1,56 @@
+﻿<Window x:Class="TCGRecordKeeping.AddCardGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCGRecordKeeping"
+        mc:Ignorable="d"
+        Title="AddCardGameWindow" Height="450" Width="871">
+    <Grid>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="15" Margin="10,38,0,0" Text="Card Game Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="98"/>
+        <TextBox x:Name="CardGameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
+        <CheckBox x:Name="TurnCountCheckBox" Content="Turn Count Matters" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="LifePointCheckBox" Checked ="LifePointCheckBox_Checked" Unchecked="LifePointCheckBox_Checked" Content="Remaining Life Points Matter" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="KFactorListView" HorizontalAlignment="Left" Height="268" Margin="243,10,0,0" VerticalAlignment="Top" Width="289">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="K Value" Width="50" DisplayMemberBinding="{Binding kFactor}"/>
+                    <GridViewColumn Header="Range" Width="239" DisplayMemberBinding="{Binding Range}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Left" Margin="232,10,0,0" Width="5"/>
+        <TextBox x:Name="KValueTextBox" HorizontalAlignment="Left" Height="20" Margin="255,306,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="18" Margin="255,283,0,0" Text="K Value" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <TextBox x:Name="MinEloTextBox" HorizontalAlignment="Left" Height="20" Margin="255,346,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Height="19" Margin="255,326,0,0" Text="Min ELO Value" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Height="17" Margin="255,366,0,0" Text="Max ELO Value" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <TextBox x:Name="MaxEloTextBox" HorizontalAlignment="Left" Height="20" Margin="255,388,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <RadioButton x:Name="KScoreNoMin" Checked="KScore_Checked" Content="x&lt;Max" HorizontalAlignment="Left" Margin="417,321,0,0" VerticalAlignment="Top" GroupName="KScore"/>
+        <RadioButton x:Name="KScoreBoth" Checked="KScore_Checked" Content="Min&lt;=x&lt;Max" HorizontalAlignment="Left" Margin="417,336,0,0" VerticalAlignment="Top" GroupName="KScore"/>
+        <RadioButton x:Name="KScoreNoMax" Checked="KScore_Checked" Content="Min&lt;=x" HorizontalAlignment="Left" Margin="417,349,0,0" VerticalAlignment="Top" GroupName="KScore"/>
+        <Button x:Name="CreateCardGameButton" Content="Create" HorizontalAlignment="Left" Margin="19,388,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.53,1.104" Click="CreateCardGameButton_Click"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="151,388,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.505,0.002" Click="CancelButton_Click"/>
+        <Button x:Name="AddKScoreTuleButton" Content="Add Rule" HorizontalAlignment="Left" Margin="428,383,0,0" VerticalAlignment="Top" Click="AddKScoreTuleButton_Click"/>
+        <GridSplitter x:Name="gridSplitter1" HorizontalAlignment="Left" Height="434" Margin="555,0,0,0" VerticalAlignment="Center" Width="5"/>
+        <ListView x:Name="TurnRuleListView" HorizontalAlignment="Left" Height="268" Margin="565,10,0,0" VerticalAlignment="Top" Width="289">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Weight" Width="50" DisplayMemberBinding="{Binding AdjustmentValue}"/>
+                    <GridViewColumn Header="Range" Width="239" DisplayMemberBinding="{Binding Range}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox x:Name="LifePointWeightTextBox" HorizontalAlignment="Left" Height="20" Margin="577,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Height="18" Margin="577,288,0,0" Text="Life Point Weight" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="MinTurnTextBox" HorizontalAlignment="Left" Height="20" Margin="577,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <TextBlock x:Name="textBlock2_Copy" HorizontalAlignment="Left" Height="19" Margin="577,331,0,0" Text="Min Turn Count" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <TextBlock x:Name="textBlock3_Copy" HorizontalAlignment="Left" Height="17" Margin="577,371,0,0" Text="Max Turn Count" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="MaxTurnTextBox" HorizontalAlignment="Left" Height="20" Margin="577,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66"/>
+        <RadioButton x:Name="TurnNoMin" Checked="Turn_Checked" Content="x&lt;Max" HorizontalAlignment="Left" Margin="739,326,0,0" VerticalAlignment="Top" GroupName="Turn"/>
+        <RadioButton x:Name="TurnBoth" Checked="Turn_Checked" Content="Min&lt;=x&lt;Max" HorizontalAlignment="Left" Margin="739,341,0,0" VerticalAlignment="Top" GroupName="Turn"/>
+        <RadioButton x:Name="TurnNoMax" Checked="Turn_Checked" Content="Min&lt;=x" HorizontalAlignment="Left" Margin="739,354,0,0" VerticalAlignment="Top" GroupName="Turn"/>
+        <Button x:Name="AddTurnRuleButton" Content="Add Rule" HorizontalAlignment="Left" Margin="750,388,0,0" VerticalAlignment="Top" Click="AddTurnRuleButton_Click"/>
+
+    </Grid>
+</Window>

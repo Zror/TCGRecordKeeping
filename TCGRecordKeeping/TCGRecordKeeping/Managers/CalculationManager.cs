@@ -8,14 +8,48 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace TCGRecordKeeping.Managers
 {
-    class CalculationManager
+    public class CalculationManager
     {
         public void updateELOScores(GameRecord record, DataManager dataManager)
         {
             List<Player> team1Players = dataManager.TranslateTeamToPlayerlist(record.Team1);
             List<Player> team2Players = dataManager.TranslateTeamToPlayerlist(record.Team2);
-            double team1Rating = team1Players.Select(p => p.ELORating).Sum();
-            double team2Rating = team2Players.Select(p => p.ELORating).Sum();
+            double team1Rating = 0;
+            double team2Rating = 0;
+            foreach (Player p in team1Players)
+            {
+                ELORating rating = p.ratings.Find(r => r.CardGameId == record.CardGameId);
+                if (rating == null)
+                {
+                    p.ratings.Add(new ELORating
+                    {
+                        CardGameId = record.CardGameId,
+                        Rating = 1500
+                    });
+                    team1Rating += 1500;
+                }
+                else
+                {
+                    team1Rating += rating.Rating;
+                }
+            }
+            foreach (Player p in team2Players)
+            {
+                ELORating rating = p.ratings.Find(r => r.CardGameId == record.CardGameId);
+                if (rating == null)
+                {
+                    p.ratings.Add(new ELORating
+                    {
+                        CardGameId = record.CardGameId,
+                        Rating = 1500
+                    });
+                    team2Rating += 1500;
+                }
+                else
+                {
+                    team2Rating += rating.Rating;
+                }
+            }
             double RTeam1 = Math.Pow(10, team1Rating / 400);
             double RTeam2 = Math.Pow(10, team2Rating / 400);
             double ETeam1 = RTeam1 / (RTeam1 + RTeam2);
@@ -65,21 +99,21 @@ namespace TCGRecordKeeping.Managers
                             switch (rule.BoundUse)
                             {
                                 case BoundUseDef.NoMaxBound:
-                                    if (rule.TurnMaxBound <= record.TurnCount)
+                                    if (rule.TurnMinBound <= record.TurnCount)
                                     {
                                         turnweight = rule.AdjustMentValue;
                                         continue;
                                     }
                                     break;
                                 case BoundUseDef.NoMinbound:
-                                    if(rule.TurnMinBound >= record.TurnCount)
+                                    if(record.TurnCount < rule.TurnMaxBound)
                                     {
                                         turnweight = rule.AdjustMentValue;
                                         continue;
                                     }
                                     break;
                                 case BoundUseDef.UseBothBounds:
-                                    if(rule.TurnMinBound >= record.TurnCount && rule.TurnMaxBound <= record.TurnCount)
+                                    if(rule.TurnMinBound <= record.TurnCount && record.TurnCount < rule.TurnMaxBound )
                                     {
                                         turnweight = rule.AdjustMentValue;
                                         continue;
@@ -105,26 +139,27 @@ namespace TCGRecordKeeping.Managers
             foreach(Player p in team1Players)
             {
                 int k = 1;
+                ELORating rating = p.ratings.Find(r => r.CardGameId == record.CardGameId);
                 foreach(KFactorRule rule in game.KFactorRules)
                 {
                     switch (rule.BoundUse)
                     {
                         case BoundUseDef.NoMaxBound:
-                            if (rule.ScoreMaxBound <= p.ELORating)
+                            if (rule.ScoreMinBound <= rating.Rating)
                             {
                                 k = rule.KFactor;
                                 continue;
                             }
                             break;
                         case BoundUseDef.NoMinbound:
-                            if (rule.ScoreMinBound >= p.ELORating)
+                            if (rating.Rating < rule.ScoreMaxBound)
                             {
                                 k = rule.KFactor;
                                 continue;
                             }
                             break;
                         case BoundUseDef.UseBothBounds:
-                            if (rule.ScoreMinBound >= p.ELORating && rule.ScoreMaxBound <= p.ELORating)
+                            if (rule.ScoreMinBound<= rating.Rating && rating.Rating < rule.ScoreMaxBound )
                             {
                                 k = rule.KFactor;
                                 continue;
@@ -132,31 +167,32 @@ namespace TCGRecordKeeping.Managers
                             break;
                     }
                 }
-                p.ELORating = p.ELORating + k * (STeam1 - ETeam1) * LifeWeight * handicapAdjustment;
+                rating.Rating = rating.Rating + k * (STeam1 - ETeam1) * LifeWeight * handicapAdjustment;
             }
             foreach (Player p in team2Players)
             {
                 int k = 1;
+                ELORating rating = p.ratings.Find(r => r.CardGameId == record.CardGameId);
                 foreach (KFactorRule rule in game.KFactorRules)
                 {
                     switch (rule.BoundUse)
                     {
                         case BoundUseDef.NoMaxBound:
-                            if (rule.ScoreMaxBound <= p.ELORating)
+                            if (rule.ScoreMinBound <= rating.Rating)
                             {
                                 k = rule.KFactor;
                                 continue;
                             }
                             break;
                         case BoundUseDef.NoMinbound:
-                            if (rule.ScoreMinBound >= p.ELORating)
+                            if (rating.Rating < rule.ScoreMaxBound)
                             {
                                 k = rule.KFactor;
                                 continue;
                             }
                             break;
                         case BoundUseDef.UseBothBounds:
-                            if (rule.ScoreMinBound >= p.ELORating && rule.ScoreMaxBound <= p.ELORating)
+                            if (rule.ScoreMinBound <= rating.Rating && rating.Rating < rule.ScoreMaxBound)
                             {
                                 k = rule.KFactor;
                                 continue;
@@ -164,7 +200,7 @@ namespace TCGRecordKeeping.Managers
                             break;
                     }
                 }
-                p.ELORating = p.ELORating + k * (STeam2 - ETeam2) * LifeWeight * handicapAdjustment;
+                rating.Rating = rating.Rating + k * (STeam2 - ETeam2) * LifeWeight * handicapAdjustment;
             }
         }
 

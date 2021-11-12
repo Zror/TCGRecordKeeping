@@ -31,12 +31,22 @@ namespace TCGRecordKeeping.DataTypes
         public int ScoreMaxBound { get; set; }
         public BoundUseDef BoundUse { get; set; }
     }
+    public class KFactorRuleListView
+    {
+        public int kFactor { get; set; }
+        public string Range { get; set; }
+    }
     public class TurnAdjustmentRule
     {
         public double AdjustMentValue;
         public int TurnMinBound { get; set; }
         public int TurnMaxBound { get; set; }
         public BoundUseDef BoundUse { get; set; }
+    }
+    public class TurnAdjustmentRuleView
+    {
+        public double AdjustmentValue { get; set; }
+        public string Range { get; set; }
     }
     public class CardGame
     {
@@ -57,7 +67,7 @@ namespace TCGRecordKeeping.DataTypes
         public int PlayerGroupID { get; set; }
         public List <PlayerHandicap> playerHandicaps { get; set; }
     }
-    class GameRecord
+    public class GameRecord
     {
         public int GameRecordId { get; set; }
         public int CardGameId { get; set; }

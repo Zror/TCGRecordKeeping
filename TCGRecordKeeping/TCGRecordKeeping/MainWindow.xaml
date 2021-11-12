@@ -5,11 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCGRecordKeeping"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
         <TextBox x:Name="DatabaseFileBox" Height="21" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="559"/>
         <Button x:Name="Save" Content="Save" Margin="637,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Height="21" Click="Save_Click"/>
         <Button x:Name="Load" Content="Load" HorizontalAlignment="Left" Margin="677,10,0,0" VerticalAlignment="Top" Click="Load_Click" Width="34" Height="21" RenderTransformOrigin="-0.294,0.573"/>
-        <Button x:Name="SelectFileButton" Content="Select File" HorizontalAlignment="Left" Height="20" Margin="574,11,0,0" VerticalAlignment="Top" Width="63" Click="SelectFileButton_Click"/>
+        <Button x:Name="CreateNewButton" Content="Create New" HorizontalAlignment="Left" Height="21" Margin="569,10,0,0" VerticalAlignment="Top" Width="68" Click="CreateNewButton_Click"/>
+
+        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Stretch" Height="765" Margin="403,-346,393,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <GridSplitter.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90.305"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </GridSplitter.RenderTransform>
+        </GridSplitter>
+        <TextBox x:Name="IdFilter" HorizontalAlignment="Left" Height="23" Margin="10,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" TextChanged="filterTextChangedEventHandler"/>
+        <ListView x:Name="PlayerListView" HorizontalAlignment="Left" Height="281" Margin="10,98,0,0" VerticalAlignment="Top" Width="244">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="IdFilterDesc" HorizontalAlignment="Left" Height="21" Margin="10,49,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="PlayerNameFilter" HorizontalAlignment="Left" Height="23" Margin="96,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="filterTextChangedEventHandler"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="21" Margin="96,49,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <TextBox x:Name="AddPlayerName" HorizontalAlignment="Left" Height="24" Margin="10,388,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159"/>
+        <Button x:Name="AddPlayerButton" Content="Add Player" HorizontalAlignment="Left" Margin="180,388,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="AddPlayerButton_Click"/>
+        <GridSplitter x:Name="gridSplitter1" HorizontalAlignment="Left" Margin="259,36,0,10" Width="5"/>
+        <TextBox x:Name="IdCardGameFilter" HorizontalAlignment="Left" Height="23" Margin="276,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" TextChanged="CardGameFilter_TextChanged"/>
+        <ListView x:Name="CardGameListView" HorizontalAlignment="Left" Height="281" Margin="276,98,0,0" VerticalAlignment="Top" Width="244">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="IdFilterDesc_Copy" HorizontalAlignment="Left" Height="21" Margin="276,49,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
+        <TextBox x:Name="CardGameNameFilter" HorizontalAlignment="Left" Height="23" Margin="362,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="CardGameFilter_TextChanged"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Height="21" Margin="362,49,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <Button x:Name="AddCardGamebtn" Content="Add Card Game" HorizontalAlignment="Left" Height="24" Margin="276,388,0,0" VerticalAlignment="Top" Width="105" Click="AddCardGamebtn_Click"/>
     </Grid>
 </Window>
