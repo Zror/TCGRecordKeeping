@@ -31,5 +31,7 @@ namespace TCGRecordKeeping.DataTypes
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public string MaxPoints { get; set; }
     }
 }

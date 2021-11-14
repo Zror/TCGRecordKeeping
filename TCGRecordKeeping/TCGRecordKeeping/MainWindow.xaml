@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCGRecordKeeping"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="MainWindow" Height="635" Width="820">
     <Grid>
         <TextBox x:Name="DatabaseFileBox" Height="21" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="559"/>
         <Button x:Name="Save" Content="Save" Margin="637,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Height="21" Click="Save_Click"/>
@@ -22,8 +22,8 @@
                 </TransformGroup>
             </GridSplitter.RenderTransform>
         </GridSplitter>
-        <TextBox x:Name="IdFilter" HorizontalAlignment="Left" Height="23" Margin="10,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" TextChanged="filterTextChangedEventHandler"/>
-        <ListView x:Name="PlayerListView" HorizontalAlignment="Left" Height="281" Margin="10,98,0,0" VerticalAlignment="Top" Width="244">
+        <TextBox x:Name="IdFilter" HorizontalAlignment="Left" Height="23" Margin="10,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" TextChanged="filterTextChangedEventHandler"/>
+        <ListView x:Name="PlayerListView" HorizontalAlignment="Left" Height="281" Margin="10,124,0,0" VerticalAlignment="Top" Width="244">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
@@ -31,14 +31,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="IdFilterDesc" HorizontalAlignment="Left" Height="21" Margin="10,49,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
-        <TextBox x:Name="PlayerNameFilter" HorizontalAlignment="Left" Height="23" Margin="96,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="filterTextChangedEventHandler"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="21" Margin="96,49,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
-        <TextBox x:Name="AddPlayerName" HorizontalAlignment="Left" Height="24" Margin="10,388,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159"/>
-        <Button x:Name="AddPlayerButton" Content="Add Player" HorizontalAlignment="Left" Margin="180,388,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="AddPlayerButton_Click"/>
-        <GridSplitter x:Name="gridSplitter1" HorizontalAlignment="Left" Margin="259,36,0,10" Width="5"/>
-        <TextBox x:Name="IdCardGameFilter" HorizontalAlignment="Left" Height="23" Margin="276,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" TextChanged="CardGameFilter_TextChanged"/>
-        <ListView x:Name="CardGameListView" HorizontalAlignment="Left" Height="281" Margin="276,98,0,0" VerticalAlignment="Top" Width="244">
+        <TextBlock x:Name="IdFilterDesc" HorizontalAlignment="Left" Height="21" Margin="10,75,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="PlayerNameFilter" HorizontalAlignment="Left" Height="23" Margin="96,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="filterTextChangedEventHandler"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="21" Margin="96,75,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <TextBox x:Name="AddPlayerName" HorizontalAlignment="Left" Height="24" Margin="10,414,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159"/>
+        <Button x:Name="AddPlayerButton" Content="Add Player" HorizontalAlignment="Left" Margin="180,414,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="AddPlayerButton_Click"/>
+        <GridSplitter x:Name="gridSplitter1" HorizontalAlignment="Left" Margin="259,36,0,141" Width="6"/>
+        <TextBox x:Name="IdCardGameFilter" HorizontalAlignment="Left" Height="23" Margin="276,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" TextChanged="CardGameFilter_TextChanged"/>
+        <ListView x:Name="CardGameListView" HorizontalAlignment="Left" Height="281" Margin="276,124,0,0" VerticalAlignment="Top" Width="244">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
@@ -46,9 +46,35 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="IdFilterDesc_Copy" HorizontalAlignment="Left" Height="21" Margin="276,49,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
-        <TextBox x:Name="CardGameNameFilter" HorizontalAlignment="Left" Height="23" Margin="362,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="CardGameFilter_TextChanged"/>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Height="21" Margin="362,49,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
-        <Button x:Name="AddCardGamebtn" Content="Add Card Game" HorizontalAlignment="Left" Height="24" Margin="276,388,0,0" VerticalAlignment="Top" Width="105" Click="AddCardGamebtn_Click"/>
+        <TextBlock x:Name="IdFilterDesc_Copy" HorizontalAlignment="Left" Height="21" Margin="276,75,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
+        <TextBox x:Name="CardGameNameFilter" HorizontalAlignment="Left" Height="23" Margin="362,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="CardGameFilter_TextChanged"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Height="21" Margin="362,75,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <Button x:Name="AddCardGamebtn" Content="Add Card Game" HorizontalAlignment="Left" Height="24" Margin="276,414,0,0" VerticalAlignment="Top" Width="105" Click="AddCardGamebtn_Click"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="26" Margin="89,49,0,0" Text="Players" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" FontSize="16"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Height="21" Margin="328,49,0,0" Text="Games" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" FontSize="16"/>
+        <GridSplitter x:Name="gridSplitter1_Copy" HorizontalAlignment="Left" Margin="525,36,0,135" Width="6"/>
+        <TextBox x:Name="TournamentIdFilter" HorizontalAlignment="Left" Height="23" Margin="546,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" TextChanged="TournamentFilter_TextChanged"/>
+        <ListView x:Name="TournamentListView" HorizontalAlignment="Left" Height="281" Margin="546,124,0,0" VerticalAlignment="Top" Width="244">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Points" DisplayMemberBinding="{Binding MaxPoints}" Width="54"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="IdFilterDesc_Copy1" HorizontalAlignment="Left" Height="21" Margin="546,75,0,0" Text="Id Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="64"/>
+        <TextBox x:Name="TournamentNameFilter" HorizontalAlignment="Left" Height="23" Margin="632,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="CardGameFilter_TextChanged"/>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Height="21" Margin="632,75,0,0" Text="Name Filter" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <TextBlock x:Name="textBlock2_Copy" HorizontalAlignment="Left" Height="21" Margin="598,49,0,0" Text="Tournaments" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" FontSize="16"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Height="19" Margin="546,405,0,0" Text="Tournament Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
+        <TextBox x:Name="TournamentNameBox" HorizontalAlignment="Left" Height="18" Margin="546,424,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
+        <CheckBox x:Name="HasMaxPointValueChxBox" Content="Has Max Point Value" HorizontalAlignment="Left" Margin="546,447,0,0" VerticalAlignment="Top" Checked="HasMaxPointValueChxBox_Checked"/>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Height="19" Margin="677,405,0,0" Text="Max Points" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="MaxPointsBox" HorizontalAlignment="Left" Height="19" Margin="674,423,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
+        <Button x:Name="AddTournamentButton" Content="Add Tournament" HorizontalAlignment="Left" Margin="679,446,0,0" VerticalAlignment="Top" Height="22" Width="97" IsCancel="True" Click="AddTournamentButton_Click"/>
+
+        <GridSplitter x:Name="gridSplitter3" HorizontalAlignment="Stretch" Height="6" Margin="0,478,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddGameRecordButton" Content="Add Game Record" HorizontalAlignment="Left" Height="24" Margin="10,495,0,0" VerticalAlignment="Top" Width="105" Click="AddGameRecordButton_Click"/>
     </Grid>
 </Window>

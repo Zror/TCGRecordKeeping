@@ -84,13 +84,14 @@ namespace TCGRecordKeeping.Managers
             }
             else
             {
+                double maxPoints = tournament.hasMaxPoints ? (double)tournament.MaxPoints : Math.Max(record.Team1RemaingLife, record.Team2RemaingLife);
                 switch (game.KFactorModification)
                 {
                     case KFactorModification.NoMod:
                         LifeWeight = 1;
                         break;
                     case KFactorModification.LifePoints:
-                        LifeWeight = ((double)Math.Abs(record.Team1RemaingLife - record.Team2RemaingLife)) / ((double)tournament.MaxLifeValue);
+                        LifeWeight = ((double)Math.Abs(record.Team1RemaingLife - record.Team2RemaingLife)) / maxPoints;
                         break;
                     case KFactorModification.LifePointsAndTurnCount:
                         double turnweight = 0;
@@ -121,7 +122,7 @@ namespace TCGRecordKeeping.Managers
                                     break;
                             }
                         }
-                        LifeWeight = 1- ((1- ((double)Math.Abs(record.Team1RemaingLife - record.Team2RemaingLife)) / ((double)tournament.MaxLifeValue))*turnweight);
+                        LifeWeight = 1- ((1- ((double)Math.Abs(record.Team1RemaingLife - record.Team2RemaingLife)) / maxPoints) *turnweight);
                         break;
 
                 }
@@ -140,7 +141,7 @@ namespace TCGRecordKeeping.Managers
             {
                 int k = 1;
                 ELORating rating = p.ratings.Find(r => r.CardGameId == record.CardGameId);
-                foreach(KFactorRule rule in game.KFactorRules)
+                foreach (KFactorRule rule in game.KFactorRules)
                 {
                     switch (rule.BoundUse)
                     {
@@ -167,7 +168,7 @@ namespace TCGRecordKeeping.Managers
                             break;
                     }
                 }
-                rating.Rating = rating.Rating + k * (STeam1 - ETeam1) * LifeWeight * handicapAdjustment;
+                rating.Rating = Math.Floor(rating.Rating + k * (STeam1 - ETeam1) * LifeWeight * handicapAdjustment);
             }
             foreach (Player p in team2Players)
             {
@@ -200,7 +201,7 @@ namespace TCGRecordKeeping.Managers
                             break;
                     }
                 }
-                rating.Rating = rating.Rating + k * (STeam2 - ETeam2) * LifeWeight * handicapAdjustment;
+                rating.Rating = Math.Floor(rating.Rating + k * (STeam2 - ETeam2) * LifeWeight * handicapAdjustment);
             }
         }
 

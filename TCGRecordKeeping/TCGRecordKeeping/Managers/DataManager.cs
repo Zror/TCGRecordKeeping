@@ -104,6 +104,7 @@ namespace TCGRecordKeeping.Managers
                 WinnerUsedAlternateWinCondition = WinnerUsedAlternateWinCondition
             };
             dataStorage.GameRecords.Add(record);
+            calcManager.updateELOScores(record, this);
             return record;
         }
         public Player AddPlayer(string playerName)
@@ -125,7 +126,7 @@ namespace TCGRecordKeeping.Managers
         public PlayerGroup AddPlayergroup(List<int> PlayerIds)
         {
             int playerGroupId = dataStorage.PlayerGroups.Count();
-            while (dataStorage.Players.Any(p => p.PlayerID == playerGroupId))
+            while (dataStorage.PlayerGroups.Any(p => p.PlayerGroupId == playerGroupId))
             {
                 playerGroupId++;
             }
@@ -137,7 +138,7 @@ namespace TCGRecordKeeping.Managers
             dataStorage.PlayerGroups.Add(group);
             return group;
         }
-        public Tournament AddTournament(string TournamentName, int MaxLifeValue)
+        public Tournament AddTournament(string TournamentName, int MaxPoints, bool hasMaxPoint)
         {
             int tournamentId = dataStorage.Tournaments.Count;
             while (dataStorage.Tournaments.Any(T => T.Id == tournamentId))
@@ -147,8 +148,9 @@ namespace TCGRecordKeeping.Managers
             Tournament tournament = new Tournament
             {
                 Id = tournamentId,
-                MaxLifeValue = MaxLifeValue,
-                TournamentName = TournamentName
+                MaxPoints = MaxPoints,
+                TournamentName = TournamentName,
+                hasMaxPoints = hasMaxPoint
             };
             dataStorage.Tournaments.Add(tournament);
             return tournament;
@@ -159,7 +161,7 @@ namespace TCGRecordKeeping.Managers
 
             group = dataStorage.PlayerGroups.Where(p => p.PlayerIds.All(PlayerIds.Contains) && PlayerIds.All(p.PlayerIds.Contains)).FirstOrDefault();
 
-            if (group.Equals(null))
+            if (group == null)
             {
                 group = AddPlayergroup(PlayerIds);
             }
@@ -189,7 +191,7 @@ namespace TCGRecordKeeping.Managers
             PlayerGroup group = dataStorage.PlayerGroups.Find(G => G.PlayerGroupId == team.PlayerGroupID);
             return dataStorage.Players.Where(p => group.PlayerIds.Contains(p.PlayerID)).ToList();
         }
-        
+
         public List<SimpleViewItem> GetPlayerViewItems(string idStr, string namSubStr)
         {
             IEnumerable<SimpleViewItem> data = dataStorage.Players.Select(p => new SimpleViewItem
@@ -216,6 +218,27 @@ namespace TCGRecordKeeping.Managers
             {
                 Id = p.Id,
                 Name = p.CardGameName
+            });
+            if (!string.IsNullOrWhiteSpace(idStr))
+            {
+                if (int.TryParse(idStr, out int id))
+                {
+                    data = data.Where(p => p.Id == id);
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(namSubStr))
+            {
+                data = data.Where(p => p.Name.ToUpper().Contains(namSubStr.ToUpper()));
+            }
+            return data.ToList();
+        }
+        public List<SimpleViewItem> GetTournamentViewItems(string idStr, string namSubStr)
+        {
+            IEnumerable<SimpleViewItem> data = dataStorage.Tournaments.Select(p => new SimpleViewItem
+            {
+                Id = p.Id,
+                Name = p.TournamentName,
+                MaxPoints = p.hasMaxPoints? p.MaxPoints.ToString(): "N/A",
             });
             if (!string.IsNullOrWhiteSpace(idStr))
             {

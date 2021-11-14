@@ -34,6 +34,7 @@ namespace TCGRecordKeeping
             IdFilter.IsEnabled = false;
             PlayerNameFilter.IsEnabled = false;
             DatabaseFileBox.IsEnabled = false;
+            MaxPointsBox.IsEnabled = HasMaxPointValueChxBox.IsChecked.Value;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -81,6 +82,7 @@ namespace TCGRecordKeeping
             PlayerNameFilter.IsEnabled = true;
             PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
+            TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
         }
 
         private void CreateNewButton_Click(object sender, RoutedEventArgs e)
@@ -116,6 +118,7 @@ namespace TCGRecordKeeping
                     PlayerNameFilter.IsEnabled = true;
                     PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
                     CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
+                    TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
                 }
                 return;
             }
@@ -151,6 +154,34 @@ namespace TCGRecordKeeping
             AddCardGameWindow cardGameWindow = new AddCardGameWindow();
             cardGameWindow.ShowDialog();
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
+        }
+
+
+        private void TournamentFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
+        }
+
+        private void HasMaxPointValueChxBox_Checked(object sender, RoutedEventArgs e)
+        {
+            MaxPointsBox.IsEnabled = HasMaxPointValueChxBox.IsChecked.Value;
+        }
+
+        private void AddTournamentButton_Click(object sender, RoutedEventArgs e)
+        {
+            int maxPoints =-1;
+            if (HasMaxPointValueChxBox.IsChecked.Value)
+            {
+                int.TryParse(MaxPointsBox.Text, out maxPoints);
+            }
+            manager.AddTournament(TournamentNameBox.Text, maxPoints, HasMaxPointValueChxBox.IsChecked.Value);
+            TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
+        }
+
+        private void AddGameRecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddGameRecordWindow window = new AddGameRecordWindow();
+            window.ShowDialog();
         }
     }
 }

@@ -60,7 +60,8 @@ namespace TCGRecordKeeping.DataTypes
     {
         public int Id { get; set; }
         public string TournamentName { get; set; }
-        public int MaxLifeValue { get; set; }
+        public int MaxPoints { get; set; }
+        public bool hasMaxPoints { get; set; }
     }
     public class Team
     {
