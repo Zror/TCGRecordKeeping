@@ -217,10 +217,12 @@ namespace TCGRecordKeeping.Managers
                 {
                     for(int j = i+1; j <= highestPlayerGroupId; j++)
                     {
-                        if (games.Any(g => g.Team1.PlayerGroupID == j || g.Team2.PlayerGroupID == j))
+                        if (games.Any(g => (g.Team1.PlayerGroupID == j && g.Team2.PlayerGroupID == i) || (g.Team2.PlayerGroupID == j && g.Team1.PlayerGroupID == i)))
                         {
                             double[] currentEquation = new double[highestPlayerID+1];
                             double[] numberOfHandicaps = new double[highestPlayerID+1];
+                            bool[] playerInTeamA = new bool[highestPlayerID + 1];
+                            bool[] playerInTeamB = new bool[highestPlayerID + 1];
                             double currentEquationAnswer = 0;
 
                             int numberofGames = 0;
@@ -231,10 +233,12 @@ namespace TCGRecordKeeping.Managers
                                 foreach (PlayerHandicap handicap in record.Team1.playerHandicaps)
                                 {
                                     numberOfHandicaps[handicap.PlayerID] += handicap.HasHandicap ? 1 : 0;
+                                    playerInTeamA[handicap.PlayerID] = true;
                                 }
                                 foreach (PlayerHandicap handicap in record.Team2.playerHandicaps)
                                 {
-                                    currentEquation[handicap.PlayerID] -= handicap.HasHandicap ? 1 : 0;
+                                    numberOfHandicaps[handicap.PlayerID] += handicap.HasHandicap ? 1 : 0;
+                                    playerInTeamB[handicap.PlayerID] = true;
                                 }
                                 currentEquationAnswer += record.Team1RemaingLife - record.Team2RemaingLife;
                             }
@@ -244,24 +248,26 @@ namespace TCGRecordKeeping.Managers
                                 numberofGames++;
                                 foreach (PlayerHandicap handicap in record.Team1.playerHandicaps)
                                 {
-                                    numberOfHandicaps[handicap.PlayerID] -= handicap.HasHandicap ? 1 : 0;
+                                    numberOfHandicaps[handicap.PlayerID] += handicap.HasHandicap ? 1 : 0;
+                                    playerInTeamB[handicap.PlayerID] = true;
                                 }
                                 foreach (PlayerHandicap handicap in record.Team2.playerHandicaps)
                                 {
-                                    currentEquation[handicap.PlayerID] += handicap.HasHandicap ? 1 : 0;
+                                    numberOfHandicaps[handicap.PlayerID] += handicap.HasHandicap ? 1 : 0;
+                                    playerInTeamA[handicap.PlayerID] = true;
                                 }
                                 currentEquationAnswer += record.Team2RemaingLife - record.Team1RemaingLife;
                             }
 
                             currentEquationAnswer = currentEquationAnswer / numberofGames;
 
-                            for(int k = 0; i<= highestPlayerID; i++)
+                            for(int k = 0; k<= highestPlayerID; k++)
                             {
-                                if (numberOfHandicaps[k] < 0)
+                                if (playerInTeamA[k])
                                 {
                                     currentEquation[k] = (-1) * numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k])); 
                                 }
-                                else
+                                if(playerInTeamB[k])
                                 {
                                     currentEquation[k] = numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k]));
                                 }
@@ -282,7 +288,7 @@ namespace TCGRecordKeeping.Managers
         {
             Matrix<double> equations = GetSystemOfEquations(games, dataManager, out Vector<double> Answers);
 
-            Matrix<double> pseudoInvers = equations.Inverse();
+            Matrix<double> pseudoInvers = equations.PseudoInverse();
 
             return pseudoInvers.Multiply(Answers);
 

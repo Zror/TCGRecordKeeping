@@ -1,0 +1,20 @@
+﻿<Window x:Class="TCGRecordKeeping.DataTypes.ExpectedValueWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCGRecordKeeping.DataTypes"
+        mc:Ignorable="d"
+        Title="ExpectedValueWindow" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="expectedScoreListView" Margin="30,30,30,30">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Player Name" Width="400" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Expected Score" Width="400" DisplayMemberBinding="{Binding Score}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

@@ -76,5 +76,20 @@
 
         <GridSplitter x:Name="gridSplitter3" HorizontalAlignment="Stretch" Height="6" Margin="0,478,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddGameRecordButton" Content="Add Game Record" HorizontalAlignment="Left" Height="24" Margin="10,495,0,0" VerticalAlignment="Top" Width="105" Click="AddGameRecordButton_Click"/>
+        <GridSplitter x:Name="gridSplitter2" HorizontalAlignment="Left" Height="138" Margin="132,481,0,0" VerticalAlignment="Top" Width="6"/>
+        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Height="24" Margin="150,495,0,0" Text="Tournament" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
+        <ComboBox x:Name="ELOTournyBox" HorizontalAlignment="Left" Height="22" Margin="150,518,0,0" VerticalAlignment="Top" Width="208"/>
+        <Button x:Name="showCurrentELORating" HorizontalAlignment="Left" Height="44" Margin="14,529,0,0" VerticalAlignment="Top" Width="101" Click="showCurrentELORating_Click">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">
+                Show Current Elo Ratings
+            </TextBlock>
+        </Button>
+        <Button x:Name="recalcuateELOBtn" Content="Recalulate ELO Score" HorizontalAlignment="Left" Height="26" Margin="154,551,0,0" VerticalAlignment="Top" Width="119" Click="recalcuateELOBtn_Click"/>
+        <GridSplitter x:Name="gridSplitter2_Copy" HorizontalAlignment="Left" Height="138" Margin="363,481,0,0" VerticalAlignment="Top" Width="6"/>
+        <TextBlock x:Name="textBlock5_Copy" HorizontalAlignment="Left" Height="24" Margin="374,494,0,0" Text="Tournament" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
+        <ComboBox x:Name="expectedScoreTournyBox" HorizontalAlignment="Left" Height="22" Margin="372,518,0,0" VerticalAlignment="Top" Width="208"/>
+        <ComboBox x:Name="expectedScoreGameBox" HorizontalAlignment="Left" Height="22" Margin="592,518,0,0" VerticalAlignment="Top" Width="208"/>
+        <TextBlock x:Name="textBlock5_Copy1" HorizontalAlignment="Left" Height="24" Margin="592,494,0,0" Text="Game" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
+        <Button x:Name="showExpectedValueBtn" Content="Show Expected Score" HorizontalAlignment="Left" Height="26" Margin="374,551,0,0" VerticalAlignment="Top" Width="118" Click="showExpectedValueBtn_Click"/>
     </Grid>
 </Window>

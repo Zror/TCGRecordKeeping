@@ -75,9 +75,14 @@ namespace TCGRecordKeeping
             {
                 winner = Winner.Team2;
             }
-            else
+            else if( TieRadioButton.IsChecked.Value)
             {
                 winner = Winner.Tie;
+            }
+            else
+            {
+                MessageBox.Show("Please select a winner");
+                return;
             }
 
             int team1score, team2score, turncount;

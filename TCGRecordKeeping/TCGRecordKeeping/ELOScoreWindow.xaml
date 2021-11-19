@@ -1,0 +1,19 @@
+﻿<Window x:Class="TCGRecordKeeping.ELOScoreWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCGRecordKeeping"
+        mc:Ignorable="d"
+        Title="ELOScoreWindow" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="ratingListView" Margin="30,30,30,30">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

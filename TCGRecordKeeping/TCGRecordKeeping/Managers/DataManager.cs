@@ -256,7 +256,7 @@ namespace TCGRecordKeeping.Managers
         public void RecalculateEloScore(int tournyID)
         {
             IEnumerable<GameRecord> games = dataStorage.GameRecords;
-            if(tournyID > 0)
+            if(tournyID >= 0)
             {
                 games = games.Where(g => g.TournamentId == tournyID);
             }

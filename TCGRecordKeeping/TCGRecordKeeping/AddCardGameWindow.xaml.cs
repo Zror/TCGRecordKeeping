@@ -49,14 +49,14 @@ namespace TCGRecordKeeping
             {
                 mod = KFactorModification.NoMod;
             }
-            if (kFactorRules.Count() < 2)
+            if (kFactorRules.Count() < 1)
             {
-                MessageBox.Show("At least 2 kfactor rules are required");
+                MessageBox.Show("At least 1 kfactor rules are required");
                 return;
             }
-            if (TurnCountCheckBox.IsChecked.Value && turnRules.Count() < 2)
+            if (TurnCountCheckBox.IsChecked.Value && turnRules.Count() < 1)
             {
-                MessageBox.Show("At least 2 turn rules are required");
+                MessageBox.Show("At least 1 turn rules are required");
                 return;
             }
             ((MainWindow)Application.Current.MainWindow).manager.AddCardGame(CardGameTextBox.Text, kFactorRules, mod, turnRules);
@@ -129,7 +129,7 @@ namespace TCGRecordKeeping
                 MessageBox.Show("K Value needs to be an integer greater than 0");
                 return;
             }
-            if (!int.TryParse(MinEloTextBox.Text, out int minelo) || minelo <= 0)
+            if (!int.TryParse(MinEloTextBox.Text, out int minelo) || minelo < 0)
             {
                 if (!KScoreNoMin.IsChecked.Value)
                 {

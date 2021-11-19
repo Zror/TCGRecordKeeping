@@ -25,6 +25,7 @@ namespace TCGRecordKeeping
     public partial class MainWindow : Window
     {
         public DataManager manager;
+        static string allTournaments = "All Tournaments";
         public MainWindow()
         {
             InitializeComponent();
@@ -83,6 +84,19 @@ namespace TCGRecordKeeping
             PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
             TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
+            List<string> eloTournyList = new List<string>()
+            {
+                allTournaments
+            };
+            eloTournyList.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+            ELOTournyBox.ItemsSource = eloTournyList;
+            List<string> eloTournyList2 = new List<string>()
+            {
+                allTournaments
+            };
+            eloTournyList2.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+            expectedScoreTournyBox.ItemsSource = eloTournyList2;
+            expectedScoreGameBox.ItemsSource = manager.dataStorage.CardGames.Select(c => c.Id.ToString() + ": " + c.CardGameName);
         }
 
         private void CreateNewButton_Click(object sender, RoutedEventArgs e)
@@ -119,6 +133,20 @@ namespace TCGRecordKeeping
                     PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
                     CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
                     TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
+                    List<string> eloTournyList = new List<string>()
+                    {
+                        allTournaments
+                    };
+                    eloTournyList.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+                    ELOTournyBox.ItemsSource = eloTournyList;
+                    List<string> eloTournyList2 = new List<string>()
+                    {
+                        allTournaments
+                    };
+                    eloTournyList2.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+                    expectedScoreTournyBox.ItemsSource = eloTournyList2;
+                    expectedScoreGameBox.ItemsSource = manager.dataStorage.CardGames.Select(c => c.Id.ToString() + ": " + c.CardGameName);
+
                 }
                 return;
             }
@@ -154,6 +182,7 @@ namespace TCGRecordKeeping
             AddCardGameWindow cardGameWindow = new AddCardGameWindow();
             cardGameWindow.ShowDialog();
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
+            expectedScoreGameBox.ItemsSource = manager.dataStorage.CardGames.Select(c => c.Id.ToString() + ": " + c.CardGameName);
         }
 
 
@@ -176,11 +205,87 @@ namespace TCGRecordKeeping
             }
             manager.AddTournament(TournamentNameBox.Text, maxPoints, HasMaxPointValueChxBox.IsChecked.Value);
             TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
+
+            List<string> eloTournyList = new List<string>()
+            {
+                allTournaments
+            };
+            eloTournyList.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+            ELOTournyBox.ItemsSource = eloTournyList;
+            List<string> eloTournyList2 = new List<string>()
+            {
+                allTournaments
+            };
+            eloTournyList2.AddRange(manager.dataStorage.Tournaments.Select(t => t.Id.ToString() + ": " + t.TournamentName));
+            expectedScoreTournyBox.ItemsSource = eloTournyList2;
         }
 
         private void AddGameRecordButton_Click(object sender, RoutedEventArgs e)
         {
             AddGameRecordWindow window = new AddGameRecordWindow();
+            window.ShowDialog();
+        }
+
+        private void showCurrentELORating_Click(object sender, RoutedEventArgs e)
+        {
+            ELOScoreWindow window = new ELOScoreWindow();
+            window.ShowDialog();
+        }
+
+        private void recalcuateELOBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ELOTournyBox.SelectedItem == null || string.IsNullOrWhiteSpace(ELOTournyBox.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Please select a tournament");
+                return;
+            }
+            int tournyID;
+            if (ELOTournyBox.SelectedItem.ToString().Equals(allTournaments))
+            {
+                tournyID = -1;
+            }
+            else
+            {
+                if(!int.TryParse(ELOTournyBox.SelectedItem.ToString().Split(':')[0], out tournyID))
+                {
+                    MessageBox.Show("Please select a valid tournament");
+                    return;
+                }
+            }
+            manager.RecalculateEloScore(tournyID);
+        }
+
+        private void showExpectedValueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (expectedScoreTournyBox.SelectedItem == null || string.IsNullOrWhiteSpace(expectedScoreTournyBox.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Please select a tournament");
+                return;
+            }
+            if(expectedScoreGameBox.SelectedItem == null || string.IsNullOrWhiteSpace(expectedScoreGameBox.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Please select a Game");
+                return;
+            }
+            int tournyId, gameId;
+            if (expectedScoreTournyBox.SelectedItem.ToString().Equals(allTournaments))
+            {
+                tournyId = -1;
+            }
+            else
+            {
+                if (!int.TryParse(expectedScoreTournyBox.SelectedItem.ToString().Split(':')[0], out tournyId))
+                {
+                    MessageBox.Show("Please select a valid tournament");
+                    return;
+                }
+            }
+            if (!int.TryParse(expectedScoreGameBox.SelectedItem.ToString().Split(':')[0], out gameId))
+            {
+                MessageBox.Show("Please select a valid tournament");
+                return;
+            }
+            ExpectedValueWindow window = new ExpectedValueWindow(tournyId, gameId);
             window.ShowDialog();
         }
     }
