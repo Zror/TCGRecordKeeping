@@ -265,11 +265,11 @@ namespace TCGRecordKeeping.Managers
                             {
                                 if (playerInTeamA[k])
                                 {
-                                    currentEquation[k] = (-1) * numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k])); 
+                                    currentEquation[k] =  numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k])); 
                                 }
                                 if(playerInTeamB[k])
                                 {
-                                    currentEquation[k] = numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k]));
+                                    currentEquation[k] = (-1) * numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k]));
                                 }
                             }
 

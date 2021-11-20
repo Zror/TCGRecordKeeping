@@ -69,7 +69,7 @@
         <TextBlock x:Name="textBlock2_Copy" HorizontalAlignment="Left" Height="21" Margin="598,49,0,0" Text="Tournaments" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" FontSize="16"/>
         <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Height="19" Margin="546,405,0,0" Text="Tournament Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
         <TextBox x:Name="TournamentNameBox" HorizontalAlignment="Left" Height="18" Margin="546,424,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
-        <CheckBox x:Name="HasMaxPointValueChxBox" Content="Has Max Point Value" HorizontalAlignment="Left" Margin="546,447,0,0" VerticalAlignment="Top" Checked="HasMaxPointValueChxBox_Checked"/>
+        <CheckBox x:Name="HasMaxPointValueChxBox" Content="Has Max Point Value" HorizontalAlignment="Left" Margin="546,447,0,0" VerticalAlignment="Top" Checked="HasMaxPointValueChxBox_Checked" Unchecked="HasMaxPointValueChxBox_Checked"/>
         <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Height="19" Margin="677,405,0,0" Text="Max Points" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
         <TextBox x:Name="MaxPointsBox" HorizontalAlignment="Left" Height="19" Margin="674,423,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102"/>
         <Button x:Name="AddTournamentButton" Content="Add Tournament" HorizontalAlignment="Left" Margin="679,446,0,0" VerticalAlignment="Top" Height="22" Width="97" IsCancel="True" Click="AddTournamentButton_Click"/>

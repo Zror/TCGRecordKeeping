@@ -36,6 +36,21 @@ namespace TCGRecordKeeping
             PlayerNameFilter.IsEnabled = false;
             DatabaseFileBox.IsEnabled = false;
             MaxPointsBox.IsEnabled = HasMaxPointValueChxBox.IsChecked.Value;
+            HasMaxPointValueChxBox.IsEnabled = false;
+            TournamentNameBox.IsEnabled = false;
+            AddCardGamebtn.IsEnabled = false;
+            AddTournamentButton.IsEnabled = false;
+            AddGameRecordButton.IsEnabled = false;
+            showCurrentELORating.IsEnabled = false;
+            recalcuateELOBtn.IsEnabled = false;
+            ELOTournyBox.IsEnabled = false;
+            expectedScoreGameBox.IsEnabled = false;
+            expectedScoreTournyBox.IsEnabled = false;
+            showExpectedValueBtn.IsEnabled = false;
+            IdCardGameFilter.IsEnabled = false;
+            CardGameNameFilter.IsEnabled = false;
+            TournamentIdFilter.IsEnabled = false;
+            TournamentNameFilter.IsEnabled = false;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -43,6 +58,7 @@ namespace TCGRecordKeeping
             if (manager == null) return;
             if (string.IsNullOrWhiteSpace(manager.FilePath)) return;
             manager.Save();
+            MessageBox.Show("File Saved");
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -81,6 +97,22 @@ namespace TCGRecordKeeping
             AddPlayerButton.IsEnabled = true;
             IdFilter.IsEnabled = true;
             PlayerNameFilter.IsEnabled = true;
+
+            HasMaxPointValueChxBox.IsEnabled = true;
+            TournamentNameBox.IsEnabled = true;
+            AddCardGamebtn.IsEnabled = true;
+            AddTournamentButton.IsEnabled = true;
+            AddGameRecordButton.IsEnabled = true;
+            showCurrentELORating.IsEnabled = true;
+            recalcuateELOBtn.IsEnabled = true;
+            ELOTournyBox.IsEnabled = true;
+            expectedScoreGameBox.IsEnabled = true;
+            expectedScoreTournyBox.IsEnabled = true;
+            showExpectedValueBtn.IsEnabled = true;
+            IdCardGameFilter.IsEnabled = true;
+            CardGameNameFilter.IsEnabled = true;
+            TournamentIdFilter.IsEnabled = true;
+            TournamentNameFilter.IsEnabled = true;
             PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
             TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
@@ -130,6 +162,21 @@ namespace TCGRecordKeeping
                     AddPlayerButton.IsEnabled = true;
                     IdFilter.IsEnabled = true;
                     PlayerNameFilter.IsEnabled = true;
+                    HasMaxPointValueChxBox.IsEnabled = true;
+                    TournamentNameBox.IsEnabled = true;
+                    AddCardGamebtn.IsEnabled = true;
+                    AddTournamentButton.IsEnabled = true;
+                    AddGameRecordButton.IsEnabled = true;
+                    showCurrentELORating.IsEnabled = true;
+                    recalcuateELOBtn.IsEnabled = true;
+                    ELOTournyBox.IsEnabled = true;
+                    expectedScoreGameBox.IsEnabled = true;
+                    expectedScoreTournyBox.IsEnabled = true;
+                    showExpectedValueBtn.IsEnabled = true;
+                    IdCardGameFilter.IsEnabled = true;
+                    CardGameNameFilter.IsEnabled = true;
+                    TournamentIdFilter.IsEnabled = true;
+                    TournamentNameFilter.IsEnabled = true;
                     PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
                     CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
                     TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
