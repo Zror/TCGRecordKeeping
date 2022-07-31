@@ -51,6 +51,7 @@ namespace TCGRecordKeeping
             CardGameNameFilter.IsEnabled = false;
             TournamentIdFilter.IsEnabled = false;
             TournamentNameFilter.IsEnabled = false;
+            GetBestTeam.IsEnabled = false;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -113,6 +114,7 @@ namespace TCGRecordKeeping
             CardGameNameFilter.IsEnabled = true;
             TournamentIdFilter.IsEnabled = true;
             TournamentNameFilter.IsEnabled = true;
+            GetBestTeam.IsEnabled = true;
             PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
             CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
             TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
@@ -177,6 +179,7 @@ namespace TCGRecordKeeping
                     CardGameNameFilter.IsEnabled = true;
                     TournamentIdFilter.IsEnabled = true;
                     TournamentNameFilter.IsEnabled = true;
+                    GetBestTeam.IsEnabled = true;
                     PlayerListView.ItemsSource = manager.GetPlayerViewItems(IdFilter.Text, PlayerNameFilter.Text);
                     CardGameListView.ItemsSource = manager.GetCardGameViewItems(IdCardGameFilter.Text, CardGameNameFilter.Text);
                     TournamentListView.ItemsSource = manager.GetTournamentViewItems(TournamentIdFilter.Text, TournamentNameFilter.Text);
@@ -333,6 +336,12 @@ namespace TCGRecordKeeping
                 return;
             }
             ExpectedValueWindow window = new ExpectedValueWindow(tournyId, gameId);
+            window.ShowDialog();
+        }
+
+        private void GetBestTeam_Click(object sender, RoutedEventArgs e)
+        {
+            GetBestTeamWindow window = new GetBestTeamWindow();
             window.ShowDialog();
         }
     }

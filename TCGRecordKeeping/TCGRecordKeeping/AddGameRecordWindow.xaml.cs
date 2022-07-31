@@ -128,8 +128,16 @@ namespace TCGRecordKeeping
                 return;
             }
 
-            int.TryParse(TournamentComboBox.SelectedItem.ToString().Split(':')[0], out int tournamentId);
-            int.TryParse(GameComboBox.SelectedItem.ToString().Split(':')[0], out int gameId);
+            if (!int.TryParse(TournamentComboBox.SelectedItem.ToString().Split(':')[0], out int tournamentId))
+            {
+                MessageBox.Show("Please choose valid Tournament");
+                return;
+            }
+            if (!int.TryParse(GameComboBox.SelectedItem.ToString().Split(':')[0], out int gameId))
+            {
+                MessageBox.Show("Please choose valid Game");
+                return;
+            }
 
             ((MainWindow)Application.Current.MainWindow).manager.AddGameRecord(
                                 Team1ListView.Items.Cast<PlayerHandicapListView>().Select(p => new PlayerHandicap

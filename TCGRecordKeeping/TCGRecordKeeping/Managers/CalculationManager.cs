@@ -265,11 +265,11 @@ namespace TCGRecordKeeping.Managers
                             {
                                 if (playerInTeamA[k])
                                 {
-                                    currentEquation[k] =  numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k])); 
+                                    currentEquation[k] +=  numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k])); 
                                 }
                                 if(playerInTeamB[k])
                                 {
-                                    currentEquation[k] = (-1) * numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k]));
+                                    currentEquation[k] -= numberofGames / Math.Min(1, numberofGames - Math.Abs(numberOfHandicaps[k]));
                                 }
                             }
 
@@ -292,6 +292,112 @@ namespace TCGRecordKeeping.Managers
 
             return pseudoInvers.Multiply(Answers);
 
+        }
+
+        public List<double[]> GetPlayerCombinations(int playercout)
+        {
+            List<double[]> entries = new List<double[]>();
+            double[] array = new double[playercout];
+            GenerateBinaryStep(playercout, 0, array, entries);
+
+            return entries;
+
+        }
+
+        public void GenerateBinaryStep(int playercount, int index, double[] currentEntry, List<double[]> allEntries)
+        {
+            if(index == playercount)
+            {
+                allEntries.Add((double[])currentEntry.Clone());
+                return;
+            }
+            currentEntry[index] = 1;
+            GenerateBinaryStep(playercount, index + 1, currentEntry, allEntries);
+            currentEntry[index] = -1;
+            GenerateBinaryStep(playercount, index + 1, currentEntry, allEntries);
+        }
+
+        public List<Tuple<int, string>> CalulcatedScoreNoMinSize(List<Double> scores, List<int> PlayerIds, out double scoreDifference)
+        {
+            List<Tuple<int, string>> teamDefinitions = new List<Tuple<int, string>>();
+            double teamAScore = 0.0;
+            double teamBScore = 0.0;
+            foreach(int id in PlayerIds)
+            {
+                double score = scores[id];
+                double tempTeamAScore = teamAScore + score;
+                double tempTeamBScore = teamBScore + score;
+                if (tempTeamAScore >= tempTeamBScore)
+                {
+                    teamDefinitions.Add(new Tuple<int, string>(id, "Team A"));
+                    teamAScore = tempTeamAScore;
+                }
+                else
+                {
+                    teamDefinitions.Add(new Tuple<int, string>(id, "Team B"));
+                    teamBScore = tempTeamBScore;
+                }
+            }
+            scoreDifference = Math.Abs(teamAScore - teamBScore);
+            return teamDefinitions;
+        }
+        public List<Tuple<int, string>> CalulcatedScoreMinSize(List<double> scores, List<int> PlayerIds, int minTeamSize, out double scoreDifference)
+        {
+            List<Tuple<int, string>> teamDefinitions = new List<Tuple<int, string>>();
+            List<double[]> combinations = GetPlayerCombinations(PlayerIds.Count);
+            combinations = combinations.Where(c => !(c.Where(v => v == 1).Count() < minTeamSize) && !(c.Where(v => v == -1).Count() < minTeamSize)).ToList();
+
+            Matrix<double> comboMatrix = Matrix<double>.Build.DenseOfRows(combinations);
+
+            List<double> playerScores = new List<double>();
+            foreach(int id in PlayerIds)
+            {
+                playerScores.Add(scores[id]);
+            }
+            Vector<double> scoresVector = Vector<double>.Build.DenseOfEnumerable(playerScores);
+
+            Vector<double> teamScores = Vector<double>.Abs( comboMatrix.Multiply(scoresVector) );
+
+            scoreDifference = teamScores.Min<double>();
+            int indexOfMin = teamScores.AbsoluteMinimumIndex();
+
+            double[] eqDefinition = combinations[indexOfMin];
+
+            for(int i = 0; i< eqDefinition.Length; i++)
+            {
+                if(eqDefinition[i] == 1)
+                {
+                    teamDefinitions.Add(new Tuple<int, string>(PlayerIds[i], "Team A"));
+                }
+                else
+                {
+                    teamDefinitions.Add(new Tuple<int, string>(PlayerIds[i], "Team B"));
+                }
+            }
+
+            return teamDefinitions;
+        }
+
+
+        public List<Tuple<int,string>> GetBestTeamCalcScore(List<int> playerIds, List<GameRecord> games, DataManager dataManager, out double scoreDifference, int minTeamSize = 1)
+        {
+            scoreDifference = 0.0;
+            if (minTeamSize > (playerIds.Count / 2)) return null;
+            List<double> scores = GetExpectedRemaingLife(games, dataManager).ToList();
+
+            if (minTeamSize == 1) return CalulcatedScoreNoMinSize(scores, playerIds,out scoreDifference);
+            return CalulcatedScoreMinSize(scores, playerIds, minTeamSize, out scoreDifference);
+        }
+
+        public List<Tuple<int,string>> GetBestTeamEloScore(int cardGameId, List<int> playerIds, List<GameRecord> games, DataManager dataManager, out double scoreDifference, int minTeamSize = 1)
+        {
+            scoreDifference = 0.0;
+            if (minTeamSize > (playerIds.Count / 2)) return null;
+            List<double> scores = dataManager.dataStorage.Players.Select(p => p.ratings.Where(r => r.CardGameId == cardGameId).Select(r => r.Rating).FirstOrDefault()).ToList();
+
+
+            if (minTeamSize == 1) return CalulcatedScoreNoMinSize(scores, playerIds, out scoreDifference);
+            return CalulcatedScoreMinSize(scores, playerIds, minTeamSize, out scoreDifference);
         }
     }
 }

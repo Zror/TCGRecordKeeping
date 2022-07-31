@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCGRecordKeeping"
         mc:Ignorable="d"
-        Title="MainWindow" Height="635" Width="820">
+        Title="MainWindow" Height="652" Width="820">
     <Grid>
         <TextBox x:Name="DatabaseFileBox" Height="21" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="559"/>
         <Button x:Name="Save" Content="Save" Margin="637,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40" Height="21" Click="Save_Click"/>
         <Button x:Name="Load" Content="Load" HorizontalAlignment="Left" Margin="677,10,0,0" VerticalAlignment="Top" Click="Load_Click" Width="34" Height="21" RenderTransformOrigin="-0.294,0.573"/>
         <Button x:Name="CreateNewButton" Content="Create New" HorizontalAlignment="Left" Height="21" Margin="569,10,0,0" VerticalAlignment="Top" Width="68" Click="CreateNewButton_Click"/>
 
-        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Stretch" Height="765" Margin="403,-346,393,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+        <GridSplitter x:Name="gridSplitter" Height="824" Margin="0,-372,405,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="6">
             <GridSplitter.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="90.305"/>
+                    <RotateTransform Angle="90
+                                     "/>
                     <TranslateTransform/>
                 </TransformGroup>
             </GridSplitter.RenderTransform>
@@ -76,20 +77,21 @@
 
         <GridSplitter x:Name="gridSplitter3" HorizontalAlignment="Stretch" Height="6" Margin="0,478,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddGameRecordButton" Content="Add Game Record" HorizontalAlignment="Left" Height="24" Margin="10,495,0,0" VerticalAlignment="Top" Width="105" Click="AddGameRecordButton_Click"/>
-        <GridSplitter x:Name="gridSplitter2" HorizontalAlignment="Left" Height="138" Margin="132,481,0,0" VerticalAlignment="Top" Width="6"/>
+        <GridSplitter x:Name="gridSplitter2" HorizontalAlignment="Left" Margin="132,481,0,0" Width="6"/>
         <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Height="24" Margin="150,495,0,0" Text="Tournament" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
         <ComboBox x:Name="ELOTournyBox" HorizontalAlignment="Left" Height="22" Margin="150,518,0,0" VerticalAlignment="Top" Width="208"/>
-        <Button x:Name="showCurrentELORating" HorizontalAlignment="Left" Height="44" Margin="14,529,0,0" VerticalAlignment="Top" Width="101" Click="showCurrentELORating_Click">
+        <Button x:Name="showCurrentELORating" HorizontalAlignment="Left" Height="44" Margin="10,524,0,0" VerticalAlignment="Top" Width="105" Click="showCurrentELORating_Click">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center">
                 Show Current Elo Ratings
             </TextBlock>
         </Button>
         <Button x:Name="recalcuateELOBtn" Content="Recalulate ELO Score" HorizontalAlignment="Left" Height="26" Margin="154,551,0,0" VerticalAlignment="Top" Width="119" Click="recalcuateELOBtn_Click"/>
-        <GridSplitter x:Name="gridSplitter2_Copy" HorizontalAlignment="Left" Height="138" Margin="363,481,0,0" VerticalAlignment="Top" Width="6"/>
+        <GridSplitter x:Name="gridSplitter2_Copy" HorizontalAlignment="Left" Margin="363,481,0,0" Width="6"/>
         <TextBlock x:Name="textBlock5_Copy" HorizontalAlignment="Left" Height="24" Margin="374,494,0,0" Text="Tournament" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
         <ComboBox x:Name="expectedScoreTournyBox" HorizontalAlignment="Left" Height="22" Margin="372,518,0,0" VerticalAlignment="Top" Width="208"/>
         <ComboBox x:Name="expectedScoreGameBox" HorizontalAlignment="Left" Height="22" Margin="592,518,0,0" VerticalAlignment="Top" Width="208"/>
         <TextBlock x:Name="textBlock5_Copy1" HorizontalAlignment="Left" Height="24" Margin="592,494,0,0" Text="Game" TextWrapping="Wrap" VerticalAlignment="Top" Width="112"/>
         <Button x:Name="showExpectedValueBtn" Content="Show Expected Score" HorizontalAlignment="Left" Height="26" Margin="374,551,0,0" VerticalAlignment="Top" Width="118" Click="showExpectedValueBtn_Click"/>
+        <Button x:Name="GetBestTeam" Content="Get Best Teams" HorizontalAlignment="Left" Margin="10,573,0,0" VerticalAlignment="Top" Height="35" Width="105" RenderTransformOrigin="0.486,-0.17" Click="GetBestTeam_Click"/>
     </Grid>
 </Window>
